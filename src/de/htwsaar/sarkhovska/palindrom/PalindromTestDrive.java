@@ -1,13 +1,8 @@
 package de.htwsaar.sarkhovska.palindrom;
 
+import java.io.*;
 import java.util.List;
 import java.util.Arrays;
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 
 public class PalindromTestDrive {
     static Palindrom paliIterative = new PalindromIterative();
@@ -15,7 +10,7 @@ public class PalindromTestDrive {
     static StringBuffer bufferIterative = new StringBuffer();
     static StringBuffer bufferRecursive = new StringBuffer();
 
-    final static String MEASUREMENT_FILE = "C:\\Users\\osarkhov\\eclipse-workspace-process.easy_rest\\Palindrom\\resources\\measurement.txt";
+    final static String MEASUREMENT_FILE = "C:\\Users\\osarkhov\\IdeaProjects\\Palindrom\\resources\\measurement.txt";
 
     public static void main(String[] args) {
         if (args.length == 0) {
@@ -24,16 +19,13 @@ public class PalindromTestDrive {
             System.exit(1);
         }
 
-        if (args[0].equals("-f") && args.length == 1) {
-            System.err.println("Please provide the file name");
-            printUsage();
-            System.exit(2);
-        }
+        ClassLoader loader = ClassLoader.getSystemClassLoader();
 
         List<String> argList = Arrays.asList(args);
 
         if (argList.get(0).equals("-f")) {
-            try (BufferedReader bf = new BufferedReader(new FileReader(argList.get(1)))) {
+            File file = new File(loader.getResource("words.txt").getFile());
+            try (BufferedReader bf = new BufferedReader(new FileReader(file))) {
                 String word = null;
                 while ((word = bf.readLine()) != null) {
                     doMeasurement(word);
@@ -52,11 +44,12 @@ public class PalindromTestDrive {
             }
         }
 
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(MEASUREMENT_FILE))) {
+        File file = new File(loader.getResource("measurement.txt").getFile());
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
             bw.append(bufferIterative.toString());
             bw.append("\n");
             bw.append(bufferRecursive.toString());
-            System.out.println("\nMeasurement written to the " + MEASUREMENT_FILE );
+            System.out.println("\nMeasurement written to the " + file.getPath() );
 
         } catch (IOException e1) {
             e1.printStackTrace();
@@ -65,7 +58,7 @@ public class PalindromTestDrive {
     }
 
     static void printUsage() {
-        System.out.println("Usage: PalindromTestDrive <word1, word2,...,word N>/-f '<file with string>'");
+        System.out.println("Usage: PalindromTestDrive <word1, word2,...,word N>/-f");
     }
 
     static void doMeasurement(String word) {
