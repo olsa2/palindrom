@@ -7,6 +7,7 @@ import java.util.Arrays;
 public class PalindromTestDrive {
     static Palindrom paliIterative = new PalindromIterative();
     static Palindrom paliRecursive = new PalindromRecursive();
+    static StringBuffer bufferLen = new StringBuffer();
     static StringBuffer bufferIterative = new StringBuffer();
     static StringBuffer bufferRecursive = new StringBuffer();
 
@@ -44,6 +45,8 @@ public class PalindromTestDrive {
 
         File file = new File(loader.getResource("measurement.txt").getFile());
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
+            bw.append(bufferLen.toString());
+            bw.append("\n");
             bw.append(bufferIterative.toString());
             bw.append("\n");
             bw.append(bufferRecursive.toString());
@@ -60,6 +63,11 @@ public class PalindromTestDrive {
     }
 
     static void doMeasurement(String word) {
+        if (!bufferLen.isEmpty()) {
+            bufferLen.append(",");
+        }
+        bufferLen.append(word.length());
+
         long start = System.nanoTime();
         boolean bPalindrom = paliIterative.isPalindrom(word);
         long end = System.nanoTime();
@@ -67,8 +75,8 @@ public class PalindromTestDrive {
         if (!bufferIterative.isEmpty()) {
             bufferIterative.append(",");
         }
-        bufferIterative.append(word.length());
-        bufferIterative.append(",");
+        //bufferIterative.append(word.length());
+        //bufferIterative.append(",");
         bufferIterative.append(end - start);
 
         start = System.nanoTime();
@@ -78,8 +86,8 @@ public class PalindromTestDrive {
         if (!bufferRecursive.isEmpty()) {
             bufferRecursive.append(",");
         }
-        bufferRecursive.append(word.length());
-        bufferRecursive.append(",");
+        //bufferRecursive.append(word.length());
+        //bufferRecursive.append(",");
         bufferRecursive.append(end - start);
 
         System.out.println(word + " = " + bPalindrom);
