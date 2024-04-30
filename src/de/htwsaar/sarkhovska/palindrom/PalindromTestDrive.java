@@ -10,8 +10,6 @@ public class PalindromTestDrive {
     static StringBuffer bufferIterative = new StringBuffer();
     static StringBuffer bufferRecursive = new StringBuffer();
 
-    //final static String MEASUREMENT_FILE = "C:\\Users\\osarkhov\\IdeaProjects\\Palindrom\\resources\\measurement.txt";
-
     public static void main(String[] args) {
         if (args.length == 0) {
             System.err.println("No arguments provided");
