@@ -75,8 +75,6 @@ public class PalindromTestDrive {
         if (!bufferIterative.isEmpty()) {
             bufferIterative.append(",");
         }
-        //bufferIterative.append(word.length());
-        //bufferIterative.append(",");
         bufferIterative.append(end - start);
 
         start = System.nanoTime();
@@ -86,8 +84,6 @@ public class PalindromTestDrive {
         if (!bufferRecursive.isEmpty()) {
             bufferRecursive.append(",");
         }
-        //bufferRecursive.append(word.length());
-        //bufferRecursive.append(",");
         bufferRecursive.append(end - start);
 
         System.out.println(word + " = " + bPalindrom);
